@@ -6,7 +6,6 @@ import { createClient } from '@supabase/supabase-js';
  */
 export const SUPABASE_URL = (import.meta.env?.VITE_SUPABASE_URL || 'https://mydctdkrfiwsmfouqkqj.supabase.co').trim().replace(/\/+$/, '');
 export const SUPABASE_ANON_KEY = (import.meta.env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15ZGN0ZGtyZml3c21mb3Vxa3FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MDIwNjQsImV4cCI6MjEwNTQ3ODA2NH0.Ti5_gfbs-bYJJRl_u3MLNwXaWkOMyB83liVAQiK0RLI').trim();
-export const SUPABASE_SERVICE_KEY = (import.meta.env?.VITE_SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
 /**
  * Obtain authoritative Supabase client instance (singleton across HMR)
@@ -17,9 +16,7 @@ export const getSupabase = () => {
   }
 
   try {
-    // Prefer service role key if available for administrative order status updates, fallback to anon key
-    const activeKey = SUPABASE_SERVICE_KEY || SUPABASE_ANON_KEY;
-    const client = createClient(SUPABASE_URL, activeKey, {
+    const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: {
         persistSession: false,
         autoRefreshToken: false,
