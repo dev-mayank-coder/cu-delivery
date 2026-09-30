@@ -3,7 +3,7 @@ import {
   Truck, ShieldCheck, CheckCircle2, Clock, MapPin, 
   Phone, MessageSquare, Search, X, Check, RefreshCcw, 
   Printer, LogOut, Volume2, VolumeX, 
-  Zap, Package, Lock
+  Zap, Package, Lock, ExternalLink
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useDeliveryAuth } from '../context/DeliveryAuthContext';
@@ -18,6 +18,22 @@ import {
   isNC1to4Order, 
   DELIVERY_AREAS 
 } from '../utils/constants';
+
+// WhatsApp Delivery Thanks Note Generator
+const getWhatsAppThanksUrl = (order) => {
+  if (!order) return null;
+  const rawPhone = order.customer?.phone || '';
+  const cleanDigits = rawPhone.replace(/\D/g, '').slice(-10);
+  if (cleanDigits.length < 10) return null;
+
+  const studentName = order.customer?.name || 'Student';
+  const targetRoom = order.customer?.room || '';
+  const hostelName = order.customer?.hostel || '';
+  const targetId = order.id || '';
+
+  const thanksMessage = `Hello ${studentName}! 👋\n\nYour Chandigarh University Store order #${targetId} has been successfully delivered to Room ${targetRoom}, ${hostelName}! 📦✨\n\nThank you for ordering with CU Campus Store (https://cu-store-mu.vercel.app).\n\nHave a great day ahead! 🚀`;
+  return `https://wa.me/91${cleanDigits}?text=${encodeURIComponent(thanksMessage)}`;
+};
 
 // Sound Chime via Web Audio API
 const playSoundChime = (type = 'success') => {
@@ -225,20 +241,28 @@ export default function DeliveryDashboard() {
     });
   }, [zoneOrders, statusTab, speedFilter, hostelSubFilter, searchQuery]);
 
-  // Action: Confirm Delivery
+  // Action: Confirm Delivery & Send WhatsApp Thanks Note
   const handleConfirmDelivered = async () => {
     if (!deliveryConfirmOrder) return;
-    const targetId = deliveryConfirmOrder.id;
-    const targetRoom = deliveryConfirmOrder.customer?.room || '';
+    const targetOrder = deliveryConfirmOrder;
+    const targetId = targetOrder.id;
+    const targetRoom = targetOrder.customer?.room || '';
 
     // Optimistic update
     setOrders(prev => prev.map(o => o.id === targetId ? { ...o, status: 'delivered', deliveredAt: new Date().toISOString() } : o));
     setDeliveryConfirmOrder(null);
 
+    const waThanksUrl = getWhatsAppThanksUrl(targetOrder);
+
     const success = await updateOrderStatusInSupabase(targetId, 'delivered');
     if (success) {
       try { confetti({ particleCount: 75, spread: 60, origin: { y: 0.65 } }); } catch { /* ignore */ }
       showToast(`Order #${targetId} marked as DELIVERED to Room ${targetRoom}!`);
+
+      // WhatsApp Thanks Note Redirect
+      if (waThanksUrl) {
+        window.open(waThanksUrl, '_blank', 'noopener,noreferrer');
+      }
     } else {
       showToast("Sync error updating cloud status", "error");
     }
@@ -315,6 +339,18 @@ export default function DeliveryDashboard() {
             >
               {audioEnabled ? <Volume2 className="w-4 h-4 text-emerald-400" /> : <VolumeX className="w-4 h-4" />}
             </button>
+
+            {/* Link to Live Storefront */}
+            <a
+              href="https://cu-store-mu.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white transition-colors"
+              title="Open Student Storefront"
+            >
+              <ExternalLink className="w-3.5 h-3.5 text-emerald-400" />
+              <span>CU Store</span>
+            </a>
 
             {/* Locked Territory Badge (No switching allowed) */}
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300">
@@ -830,19 +866,34 @@ export default function DeliveryDashboard() {
                         <span>MARK AS DELIVERED</span>
                       </button>
                     ) : (
-                      <div className="flex items-center gap-2">
-                        <div className="flex-1 py-2 px-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold flex items-center justify-center gap-1.5">
-                          <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
-                          <span>Delivery Completed</span>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <div className="flex-1 py-2 px-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold flex items-center justify-center gap-1.5">
+                            <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
+                            <span>Delivery Completed</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleRevertToPending(order)}
+                            className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors cursor-pointer"
+                            title="Undo"
+                          >
+                            Undo
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => handleRevertToPending(order)}
-                          className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors cursor-pointer"
-                          title="Undo"
-                        >
-                          Undo
-                        </button>
+
+                        {getWhatsAppThanksUrl(order) && (
+                          <a
+                            href={getWhatsAppThanksUrl(order)}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full py-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 hover:text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+                            title="Send Thanks Note on WhatsApp"
+                          >
+                            <MessageSquare className="w-4 h-4 text-emerald-400" />
+                            <span>Send Thanks Note on WhatsApp</span>
+                          </a>
+                        )}
                       </div>
                     )}
 
@@ -953,13 +1004,26 @@ export default function DeliveryDashboard() {
                                 Mark Delivered
                               </button>
                             ) : (
-                              <button
-                                type="button"
-                                onClick={() => handleRevertToPending(order)}
-                                className="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold cursor-pointer"
-                              >
-                                Undo
-                              </button>
+                              <>
+                                {getWhatsAppThanksUrl(order) && (
+                                  <a
+                                    href={getWhatsAppThanksUrl(order)}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="p-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 transition-colors"
+                                    title="Send Thanks Note on WhatsApp"
+                                  >
+                                    <MessageSquare className="w-3.5 h-3.5" />
+                                  </a>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => handleRevertToPending(order)}
+                                  className="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold cursor-pointer"
+                                >
+                                  Undo
+                                </button>
+                              </>
                             )}
                             <button
                               type="button"
@@ -1023,6 +1087,11 @@ export default function DeliveryDashboard() {
               </div>
             </div>
 
+            <p className="text-[11px] text-emerald-400/90 text-center font-medium flex items-center justify-center gap-1.5 pt-0.5">
+              <MessageSquare className="w-3.5 h-3.5" />
+              <span>Redirects to WhatsApp with Thanks Note upon confirming</span>
+            </p>
+
             <div className="flex items-center gap-2 pt-1">
               <button
                 type="button"
@@ -1034,9 +1103,9 @@ export default function DeliveryDashboard() {
               <button
                 type="button"
                 onClick={handleConfirmDelivered}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/25 transition-all cursor-pointer"
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/25 transition-all cursor-pointer flex items-center justify-center gap-1.5"
               >
-                Confirm Drop
+                <span>Confirm & WhatsApp</span>
               </button>
             </div>
           </div>

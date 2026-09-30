@@ -5,7 +5,7 @@ const DeliveryAuthContext = createContext(null);
 export const DELIVERY_PROFILES = {
   zakir: {
     id: "usr_deliv_zakir",
-    username: "zakir",
+    username: "zakir_manager25",
     name: "Delivery Executives",
     displayName: "Delivery Executives (Zakir)",
     zoneName: "Zakir Blocks (A, B, C, D)",
@@ -13,12 +13,12 @@ export const DELIVERY_PROFILES = {
     role: "delivery_executive",
     phone: "+91 94372 56443",
     department: "CU Delivery Fleet - Zakir Zone",
-    validUsernames: ['zakir', 'zakir_delivery', 'zakir-delivery', 'zakir delivery', 'zakir runner'],
-    validPasswords: ['zakir', 'zakir123', 'delivery123', 'cu@2026', 'cu@zakir', 'notavgbestudent']
+    validUsernames: ['zakir_manager25'],
+    validPasswords: ['anshu83hope']
   },
   nc: {
     id: "usr_deliv_nc",
-    username: "nc",
+    username: "NC_manager14",
     name: "Delivery Executives",
     displayName: "Delivery Executives - NC (1 to 4)",
     zoneName: "NC Blocks (1, 2, 3, 4)",
@@ -26,8 +26,8 @@ export const DELIVERY_PROFILES = {
     role: "delivery_executive",
     phone: "+91 92530 77761",
     department: "CU Delivery Fleet - NC 1-4 Zone",
-    validUsernames: ['nc', 'nc1to4', 'nc(1 to 4)', 'nc(1to4)', 'nc 1 to 4', 'nc_delivery', 'nc-delivery'],
-    validPasswords: ['nc', 'nc123', 'delivery123', 'cu@2026', 'cu@nc', 'notavgbestudent']
+    validUsernames: ['nc_manager14'],
+    validPasswords: ['karan27light']
   }
 };
 
@@ -61,7 +61,7 @@ export function DeliveryAuthProvider({ children }) {
     const cleanPass = (password || '').trim();
 
     if (!cleanUser) {
-      const err = "Please enter your executive username ('zakir' or 'nc').";
+      const err = "Please enter your executive username.";
       setAuthError(err);
       return { success: false, error: err };
     }
@@ -74,14 +74,14 @@ export function DeliveryAuthProvider({ children }) {
 
     // 1. Zakir user authentication
     if (DELIVERY_PROFILES.zakir.validUsernames.includes(cleanUser)) {
-      const isPassValid = DELIVERY_PROFILES.zakir.validPasswords.includes(cleanPass.toLowerCase());
+      const isPassValid = DELIVERY_PROFILES.zakir.validPasswords.includes(cleanPass);
       if (isPassValid) {
         const profile = { ...DELIVERY_PROFILES.zakir, token: `deliv_zakir_${Date.now()}` };
         setCurrentUser(profile);
         setAuthError(null);
         return { success: true, user: profile };
       } else {
-        const err = "Incorrect password for Zakir Delivery Executive. (Default: delivery123)";
+        const err = "Incorrect password for Zakir Delivery Executive.";
         setAuthError(err);
         return { success: false, error: err };
       }
@@ -89,20 +89,20 @@ export function DeliveryAuthProvider({ children }) {
 
     // 2. NC (1 to 4) user authentication
     if (DELIVERY_PROFILES.nc.validUsernames.includes(cleanUser)) {
-      const isPassValid = DELIVERY_PROFILES.nc.validPasswords.includes(cleanPass.toLowerCase());
+      const isPassValid = DELIVERY_PROFILES.nc.validPasswords.includes(cleanPass);
       if (isPassValid) {
         const profile = { ...DELIVERY_PROFILES.nc, token: `deliv_nc_${Date.now()}` };
         setCurrentUser(profile);
         setAuthError(null);
         return { success: true, user: profile };
       } else {
-        const err = "Incorrect password for NC (1 to 4) Delivery Executive. (Default: delivery123)";
+        const err = "Incorrect password for NC (1 to 4) Delivery Executive.";
         setAuthError(err);
         return { success: false, error: err };
       }
     }
 
-    const err = "Invalid username. Enter 'zakir' for Zakir Delivery or 'nc' for NC 1-4 Delivery.";
+    const err = "Invalid username. Please check your credentials.";
     setAuthError(err);
     return { success: false, error: err };
   };

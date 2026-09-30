@@ -62,5 +62,5 @@ This repository is ready for one-click deployment:
 
 | Executive | Username | Password | Assigned Hostels | Order ID Pattern |
 | :--- | :--- | :--- | :--- | :--- |
-| **Zakir Executive** | `zakir` | `delivery123` | Zakir A, B, C, D | `CU-A-*`, `CU-B-*`, `CU-C-*`, `CU-D-*` |
-| **NC Executive** | `nc` | `delivery123` | NC 1, 2, 3, 4 | `CU-1-*`, `CU-2-*`, `CU-3-*`, `CU-4-*` |
+| **Zakir Executive** | `zakir_manager25` | `anshu83hope` | Zakir A, B, C, D | `CU-A-*`, `CU-B-*`, `CU-C-*`, `CU-D-*` |
+| **NC Executive** | `NC_manager14` | `karan27light` | NC 1, 2, 3, 4 | `CU-1-*`, `CU-2-*`, `CU-3-*`, `CU-4-*` |

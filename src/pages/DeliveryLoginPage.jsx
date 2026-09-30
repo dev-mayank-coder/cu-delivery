@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Truck, Lock, ArrowRight, AlertCircle, 
-  User, Eye, EyeOff, ArrowLeft, ShieldCheck, MapPin, KeyRound
+  User, Eye, EyeOff, ArrowLeft
 } from 'lucide-react';
 import { useDeliveryAuth } from '../context/DeliveryAuthContext';
 
@@ -43,7 +43,7 @@ export default function DeliveryLoginPage() {
         {/* Top Header Label */}
         <div className="flex items-center justify-between">
           <a 
-            href="http://localhost:5173"
+            href="https://cu-store-mu.vercel.app"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-emerald-400 transition-colors"
@@ -94,7 +94,7 @@ export default function DeliveryLoginPage() {
                 autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter 'zakir' or 'nc'"
+                placeholder="Enter executive username"
                 className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-4 py-3 text-sm text-white outline-none transition-all placeholder:text-slate-600 font-medium"
                 autoFocus
               />
@@ -136,30 +136,6 @@ export default function DeliveryLoginPage() {
             <ArrowRight className="w-4 h-4 stroke-[3]" />
           </button>
         </form>
-
-        {/* Assigned Users Reference Card */}
-        <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-2 text-[11px]">
-          <div className="flex items-center gap-1.5 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
-            <KeyRound className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Authorized Delivery Accounts</span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 pt-1">
-            <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span className="font-bold text-white block">Zakir Delivery</span>
-              <p className="text-[10px] text-slate-400">User: <code className="text-emerald-400">zakir</code></p>
-              <p className="text-[10px] text-slate-400">Pass: <code className="text-slate-300">delivery123</code></p>
-              <p className="text-[9px] text-emerald-400/80 pt-0.5">Orders: CU-A-xxx, CU-B-xxx...</p>
-            </div>
-
-            <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span className="font-bold text-white block">NC (1-4) Delivery</span>
-              <p className="text-[10px] text-slate-400">User: <code className="text-blue-400">nc</code></p>
-              <p className="text-[10px] text-slate-400">Pass: <code className="text-slate-300">delivery123</code></p>
-              <p className="text-[9px] text-blue-400/80 pt-0.5">Orders: CU-1-xxx to CU-4-xxx</p>
-            </div>
-          </div>
-        </div>
 
         <div className="text-center pt-1 border-t border-slate-800/80">
           <p className="text-[11px] text-slate-500">
