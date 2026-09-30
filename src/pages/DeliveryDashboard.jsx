@@ -123,13 +123,28 @@ export default function DeliveryDashboard() {
     }
   };
 
-  // Initial load and continuous background sync
+  // Initial load and continuous lean background sync
   useEffect(() => {
     loadOrders();
 
-    const handleSync = () => loadOrders();
+    const handleSync = () => {
+      // Avoid making API calls when tab or screen is hidden/minimized
+      if (typeof document !== 'undefined' && document.visibilityState === 'hidden') {
+        return;
+      }
+      loadOrders();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        loadOrders();
+      }
+    };
+
     window.addEventListener('focus', handleSync);
-    const interval = setInterval(handleSync, 8000);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    // 45s fallback poll (Realtime WebSockets handles instantaneous updates)
+    const interval = setInterval(handleSync, 45000);
 
     // Supabase Realtime channel
     const client = getSupabase();
@@ -167,6 +182,7 @@ export default function DeliveryDashboard() {
 
     return () => {
       window.removeEventListener('focus', handleSync);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       clearInterval(interval);
       if (client && channel) client.removeChannel(channel);
     };
