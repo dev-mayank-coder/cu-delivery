@@ -45,8 +45,8 @@ export function isZakirOrder(order) {
 export function isNC1to4Order(order) {
   if (!order) return false;
   const id = String(order.id || '').trim().toUpperCase();
-  // Order ID matches CU-1-xxx, CU-2-xxx, CU-3-xxx, CU-4-xxx (and not CU-10-, CU-11-, CU-5- etc.)
-  if (/^CU-[1-4]-/i.test(id) || /^CU-NC[1-4]-/i.test(id)) return true;
+  // Order ID matches CU-1-xxx, CU-2-xxx, CU-3-xxx, CU-4-xxx or CU-NC-1-xxx, CU-NC1-xxx etc.
+  if (/^CU-[1-4]-/i.test(id) || /^CU-NC[-_]?[1-4]-/i.test(id)) return true;
 
   // Also check customer hostel
   const hostel = String(order.customer?.hostel || '').toLowerCase();
