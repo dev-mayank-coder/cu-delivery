@@ -33,12 +33,12 @@ export default function DeliveryLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-[#070d18] to-slate-950 text-slate-100 flex items-center justify-center px-4 py-8 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-[#070d18] to-slate-950 text-slate-100 flex items-center justify-center px-3 sm:px-4 py-4 sm:py-8 relative overflow-x-hidden font-sans safe-bottom safe-top">
       {/* Background glow effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] h-[350px] sm:h-[550px] bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-60 sm:w-80 h-60 sm:h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="w-full max-w-md bg-slate-900/90 backdrop-blur-2xl border border-slate-800/90 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative z-10">
+      <div className="w-full max-w-md bg-slate-900/90 backdrop-blur-2xl border border-slate-800/90 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl space-y-4 sm:space-y-6 relative z-10 my-auto">
         
         {/* Top Header Label */}
         <div className="flex items-center justify-between">
@@ -57,14 +57,14 @@ export default function DeliveryLoginPage() {
         </div>
 
         {/* Portal Header */}
-        <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl p-0.5 shadow-xl mx-auto flex items-center justify-center bg-gradient-to-tr from-emerald-500 via-teal-400 to-purple-600 shadow-emerald-500/20">
+        <div className="text-center space-y-1.5 sm:space-y-2">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl p-0.5 shadow-xl mx-auto flex items-center justify-center bg-gradient-to-tr from-emerald-500 via-teal-400 to-purple-600 shadow-emerald-500/20">
             <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-emerald-400">
-              <Truck className="w-7 h-7" />
+              <Truck className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
           </div>
 
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
             Delivery Executives Portal
           </h1>
           <p className="text-xs text-slate-400 leading-relaxed max-w-xs mx-auto">

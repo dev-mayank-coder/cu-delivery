@@ -302,11 +302,11 @@ export default function DeliveryDashboard() {
     : DELIVERY_AREAS.nc_1_4.hostels;
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 flex flex-col font-sans pb-16 selection:bg-emerald-500 selection:text-slate-950">
+    <div className="min-h-screen bg-[#090D16] text-slate-100 flex flex-col font-sans pb-16 selection:bg-emerald-500 selection:text-slate-950 safe-bottom">
       
       {/* Toast Alert */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-xl border border-emerald-500/30 bg-slate-900/95 text-white animate-in slide-in-from-bottom duration-300">
+        <div className="fixed bottom-6 right-4 sm:right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-xl border border-emerald-500/30 bg-slate-900/95 text-white animate-in slide-in-from-bottom duration-300 max-w-[90vw]">
           <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
             <CheckCircle2 className="w-4 h-4 stroke-[3]" />
           </div>
@@ -315,34 +315,33 @@ export default function DeliveryDashboard() {
       )}
 
       {/* Top Header */}
-      <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/90">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-3">
+      <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/90 safe-top">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-3">
           
           {/* Logo & Portal Identity */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-600 p-0.5 shadow-lg shadow-emerald-500/20 shrink-0">
-              <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-emerald-400">
-                <Truck className="w-5 h-5" />
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-600 p-0.5 shadow-lg shadow-emerald-500/20 shrink-0">
+              <div className="w-full h-full bg-slate-950 rounded-[10px] sm:rounded-[14px] flex items-center justify-center text-emerald-400">
+                <Truck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-sm sm:text-base font-black text-white tracking-tight leading-tight">
-                  CU Express Delivery
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <h1 className="text-xs sm:text-base font-black text-white tracking-tight leading-tight truncate">
+                  CU Express
                 </h1>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                  Fleet Console
+                <span className="px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">
+                  Fleet
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium">
-                User: <strong className="text-white">Delivery Executives</strong> • {currentUser?.displayName}
+              <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium truncate">
+                <strong className="text-white">{currentUser?.displayName || 'Executive'}</strong>
               </p>
             </div>
           </div>
 
           {/* Right Header Actions */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             {/* Audio Toggle */}
             <button
               type="button"
@@ -350,8 +349,9 @@ export default function DeliveryDashboard() {
                 setAudioEnabled(!audioEnabled);
                 if (!audioEnabled) playSoundChime('success');
               }}
-              className="p-2 sm:px-2.5 sm:py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer min-h-[38px] min-w-[38px] flex items-center justify-center"
               title={audioEnabled ? "Mute chimes" : "Enable chimes"}
+              aria-label="Toggle sound"
             >
               {audioEnabled ? <Volume2 className="w-4 h-4 text-emerald-400" /> : <VolumeX className="w-4 h-4" />}
             </button>
@@ -361,86 +361,86 @@ export default function DeliveryDashboard() {
               href="https://cu-store-mu.vercel.app"
               target="_blank"
               rel="noreferrer"
-              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white transition-colors"
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white transition-colors min-h-[38px]"
               title="Open Student Storefront"
             >
               <ExternalLink className="w-3.5 h-3.5 text-emerald-400" />
               <span>CU Store</span>
             </a>
 
-            {/* Locked Territory Badge (No switching allowed) */}
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300">
+            {/* Locked Territory Badge */}
+            <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300 min-h-[38px]">
               <Lock className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{isZakirRunner ? 'Zakir Blocks Locked' : 'NC (1-4) Blocks Locked'}</span>
+              <span>{isZakirRunner ? 'Zakir Zone' : 'NC Zone'}</span>
             </div>
 
             {/* Logout */}
             <button
               type="button"
               onClick={logout}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold transition-all cursor-pointer"
+              className="flex items-center gap-1 px-2.5 sm:px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold transition-all cursor-pointer min-h-[38px]"
               title="Sign Out"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
+              <span className="hidden sm:inline">Sign Out</span>
             </button>
           </div>
         </div>
 
-        {/* Territory Status Banner */}
-        <div className="bg-emerald-950/40 border-t border-b border-emerald-500/20 px-4 py-2">
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="flex h-2 w-2 relative">
+        {/* Territory Status Banner (Filtered text removed!) */}
+        <div className="bg-emerald-950/30 border-t border-b border-emerald-500/20 px-3 sm:px-6 lg:px-8 py-1.5 sm:py-2">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-xs">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="flex h-2 w-2 relative shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="text-emerald-300 font-semibold">
-                Locked Assigned Territory: <strong className="text-white">{currentZoneMeta.name}</strong> ({currentZoneMeta.description})
+              <span className="text-emerald-300 font-semibold truncate text-[11px] sm:text-xs">
+                Zone: <strong className="text-white">{currentZoneMeta.name}</strong>
               </span>
             </div>
-            <div className="text-[11px] text-slate-400">
-              Filtering: <strong className="text-emerald-400 font-mono">{isZakirRunner ? 'CU-A-xxx to CU-D-xxx' : 'CU-1-xxx to CU-4-xxx'}</strong>
-            </div>
+            <span className="text-[10px] font-bold text-emerald-400/90 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 shrink-0">
+              Active Fleet
+            </span>
           </div>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 sm:pt-6 flex-grow space-y-5">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 flex-grow space-y-3.5 sm:space-y-5">
         
-        {/* KPI Scoreboard */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+        {/* KPI Scoreboard - Adaptive 2-col on phone portrait, 4-col in phone landscape & desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
           
           {/* Card 1: PENDING ORDERS */}
           <div 
             onClick={() => setStatusTab('pending')}
-            className={`p-4 rounded-2xl border transition-all cursor-pointer relative overflow-hidden group ${
+            className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all cursor-pointer relative overflow-hidden group ${
               statusTab === 'pending'
                 ? 'bg-amber-500/10 border-amber-500/50 shadow-lg shadow-amber-500/10 ring-1 ring-amber-500/30'
                 : 'bg-slate-900/90 border-slate-800 hover:border-amber-500/30'
             }`}
           >
-            <div className="flex items-start justify-between">
-              <div>
+            <div className="flex items-start justify-between gap-1">
+              <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] sm:text-xs text-amber-400 font-bold uppercase tracking-wider">Pending Drops</span>
+                  <span className="text-[10px] sm:text-xs text-amber-400 font-bold uppercase tracking-wider truncate">Pending Drops</span>
                   {zonePendingCount > 0 && (
-                    <span className="relative flex h-2 w-2">
+                    <span className="relative flex h-2 w-2 shrink-0">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                     </span>
                   )}
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-black text-white mt-1 tracking-tight">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white mt-0.5 sm:mt-1 tracking-tight">
                   {zonePendingCount}
                 </h3>
-                <p className="text-[11px] text-slate-400 mt-0.5 font-medium line-clamp-1">
-                  Awaiting room delivery
+                <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-medium line-clamp-1">
+                  Awaiting room drop
                 </p>
               </div>
-              <div className="p-2.5 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30 group-hover:scale-105 transition-transform shrink-0">
-                <Clock className="w-5 h-5" />
+              <div className="p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30 group-hover:scale-105 transition-transform shrink-0">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
           </div>
@@ -448,24 +448,24 @@ export default function DeliveryDashboard() {
           {/* Card 2: DELIVERED ORDERS */}
           <div 
             onClick={() => setStatusTab('delivered')}
-            className={`p-4 rounded-2xl border transition-all cursor-pointer relative overflow-hidden group ${
+            className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all cursor-pointer relative overflow-hidden group ${
               statusTab === 'delivered'
                 ? 'bg-emerald-500/10 border-emerald-500/50 shadow-lg shadow-emerald-500/10 ring-1 ring-emerald-500/30'
                 : 'bg-slate-900/90 border-slate-800 hover:border-emerald-500/30'
             }`}
           >
-            <div className="flex items-start justify-between">
-              <div>
-                <span className="text-[10px] sm:text-xs text-emerald-400 font-bold uppercase tracking-wider">Completed</span>
-                <h3 className="text-2xl sm:text-3xl font-black text-emerald-400 mt-1 tracking-tight">
+            <div className="flex items-start justify-between gap-1">
+              <div className="min-w-0">
+                <span className="text-[10px] sm:text-xs text-emerald-400 font-bold uppercase tracking-wider truncate">Completed</span>
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-emerald-400 mt-0.5 sm:mt-1 tracking-tight">
                   {zoneDeliveredCount}
                 </h3>
-                <p className="text-[11px] text-slate-400 mt-0.5 font-medium line-clamp-1">
+                <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-medium line-clamp-1">
                   Delivered to rooms
                 </p>
               </div>
-              <div className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 group-hover:scale-105 transition-transform shrink-0">
-                <CheckCircle2 className="w-5 h-5" />
+              <div className="p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 group-hover:scale-105 transition-transform shrink-0">
+                <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
           </div>
@@ -473,65 +473,65 @@ export default function DeliveryDashboard() {
           {/* Card 3: TOTAL ASSIGNED ORDERS */}
           <div 
             onClick={() => setStatusTab('all')}
-            className={`p-4 rounded-2xl border transition-all cursor-pointer relative overflow-hidden group ${
+            className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all cursor-pointer relative overflow-hidden group ${
               statusTab === 'all'
                 ? 'bg-blue-500/10 border-blue-500/50 shadow-lg shadow-blue-500/10 ring-1 ring-blue-500/30'
                 : 'bg-slate-900/90 border-slate-800 hover:border-blue-500/30'
             }`}
           >
-            <div className="flex items-start justify-between">
-              <div>
-                <span className="text-[10px] sm:text-xs text-blue-400 font-bold uppercase tracking-wider">Total Orders</span>
-                <h3 className="text-2xl sm:text-3xl font-black text-white mt-1 tracking-tight">
+            <div className="flex items-start justify-between gap-1">
+              <div className="min-w-0">
+                <span className="text-[10px] sm:text-xs text-blue-400 font-bold uppercase tracking-wider truncate">Total Orders</span>
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white mt-0.5 sm:mt-1 tracking-tight">
                   {zoneTotalCount}
                 </h3>
-                <p className="text-[11px] text-slate-400 mt-0.5 font-medium line-clamp-1">
+                <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-medium line-clamp-1">
                   Express: <strong className="text-amber-400 font-bold">{zoneExpressCount}</strong>
                 </p>
               </div>
-              <div className="p-2.5 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/30 group-hover:scale-105 transition-transform shrink-0">
-                <Package className="w-5 h-5" />
+              <div className="p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/30 group-hover:scale-105 transition-transform shrink-0">
+                <Package className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
           </div>
 
           {/* Card 4: TOTAL VALUE / CASH COLLECTION */}
-          <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 relative overflow-hidden group">
-            <div className="flex items-start justify-between">
-              <div>
-                <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider">Volume Value</span>
-                <h3 className="text-2xl sm:text-3xl font-black text-white mt-1 tracking-tight">
+          <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/90 border border-slate-800 relative overflow-hidden group">
+            <div className="flex items-start justify-between gap-1">
+              <div className="min-w-0">
+                <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider truncate">Volume Value</span>
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white mt-0.5 sm:mt-1 tracking-tight">
                   ₹{zoneRevenue.toLocaleString('en-IN')}
                 </h3>
-                <p className="text-[11px] text-slate-400 mt-0.5 font-medium line-clamp-1">
-                  {zoneTotalCount > 0 ? `${Math.round((zoneDeliveredCount / zoneTotalCount) * 100)}% completed` : '0%'}
+                <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 font-medium line-clamp-1">
+                  {zoneTotalCount > 0 ? `${Math.round((zoneDeliveredCount / zoneTotalCount) * 100)}% done` : '0% done'}
                 </p>
               </div>
-              <div className="p-2.5 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/30 group-hover:scale-105 transition-transform shrink-0">
-                <Truck className="w-5 h-5" />
+              <div className="p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/30 group-hover:scale-105 transition-transform shrink-0">
+                <Truck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
           </div>
 
         </div>
 
-        {/* PRIMARY STATUS TABS & ACTIONS */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/80 p-2 sm:p-2.5 rounded-2xl border border-slate-800">
+        {/* PRIMARY STATUS TABS & ACTIONS - Single Row on Mobile with Touch-Scroll */}
+        <div className="flex items-center justify-between gap-2 bg-slate-900/80 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-slate-800">
           
           {/* Status Tabs */}
-          <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto">
+          <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar touch-scroll min-w-0 flex-1">
             <button
               type="button"
               onClick={() => setStatusTab('pending')}
-              className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg sm:rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[38px] ${
                 statusTab === 'pending'
                   ? 'bg-amber-500 text-slate-950 font-black shadow-lg shadow-amber-500/25'
                   : 'text-slate-300 hover:text-white hover:bg-slate-800'
               }`}
             >
-              <Clock className="w-4 h-4" />
-              <span>Pending Deliveries</span>
-              <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${
+              <Clock className="w-3.5 h-3.5" />
+              <span>Pending</span>
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-black ${
                 statusTab === 'pending' ? 'bg-slate-950 text-amber-400' : 'bg-amber-500/20 text-amber-300'
               }`}>
                 {zonePendingCount}
@@ -541,15 +541,15 @@ export default function DeliveryDashboard() {
             <button
               type="button"
               onClick={() => setStatusTab('delivered')}
-              className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg sm:rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[38px] ${
                 statusTab === 'delivered'
                   ? 'bg-emerald-500 text-slate-950 font-black shadow-lg shadow-emerald-500/25'
                   : 'text-slate-300 hover:text-white hover:bg-slate-800'
               }`}
             >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Completed</span>
-              <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Delivered</span>
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-black ${
                 statusTab === 'delivered' ? 'bg-slate-950 text-emerald-400' : 'bg-emerald-500/20 text-emerald-300'
               }`}>
                 {zoneDeliveredCount}
@@ -559,66 +559,65 @@ export default function DeliveryDashboard() {
             <button
               type="button"
               onClick={() => setStatusTab('all')}
-              className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg sm:rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap shrink-0 min-h-[38px] ${
                 statusTab === 'all'
                   ? 'bg-slate-100 text-slate-950 font-black shadow-lg'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
-              <Package className="w-4 h-4" />
-              <span>All Orders ({zoneTotalCount})</span>
+              <Package className="w-3.5 h-3.5" />
+              <span>All ({zoneTotalCount})</span>
             </button>
           </div>
 
           {/* Quick Refresh */}
-          <div className="flex items-center gap-2 justify-end">
-            <button
-              type="button"
-              onClick={() => {
-                loadOrders();
-                showToast("Orders synced from cloud");
-              }}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition-all cursor-pointer"
-              title="Refresh Orders"
-            >
-              <RefreshCcw className="w-3.5 h-3.5" />
-              <span>Sync Cloud</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => {
+              loadOrders();
+              showToast("Orders synced from cloud");
+            }}
+            className="flex items-center gap-1 px-2.5 sm:px-3 py-2 rounded-lg sm:rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition-all cursor-pointer shrink-0 min-h-[38px]"
+            title="Refresh Orders"
+          >
+            <RefreshCcw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-emerald-400' : ''}`} />
+            <span className="hidden sm:inline">Sync</span>
+          </button>
         </div>
 
         {/* SEARCH & FILTERS BAR */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/60 p-3 rounded-2xl border border-slate-800/80">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-3 bg-slate-900/60 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-slate-800/80">
           
           {/* Search Input */}
           <div className="relative flex-grow max-w-md">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
             <input
               type="text"
-              placeholder="Search room door, student name, phone, order ID..."
+              placeholder="Search room door, student, phone, order ID..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-8 py-2.5 text-xs text-white placeholder:text-slate-600 outline-none transition-all"
+              className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-8 py-2.5 text-xs text-white placeholder:text-slate-600 outline-none transition-all min-h-[38px]"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-1"
+                aria-label="Clear search"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
 
-          {/* Sub-Filters & View Mode (Strictly for their own assigned blocks) */}
+          {/* Sub-Filters & View Mode */}
           <div className="grid grid-cols-2 sm:flex sm:items-center gap-2">
             
-            {/* Specific Block Sub-Filter (Zakir A-D for Zakir, NC 1-4 for NC) */}
+            {/* Specific Block Sub-Filter */}
             <select
               value={hostelSubFilter}
               onChange={(e) => setHostelSubFilter(e.target.value)}
-              className="w-full sm:w-auto bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-2 text-xs text-slate-300 font-semibold outline-none focus:border-emerald-500"
+              className="w-full sm:w-auto bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-2 text-xs text-slate-300 font-semibold outline-none focus:border-emerald-500 min-h-[38px]"
             >
               <option value="all">All {isZakirRunner ? 'Zakir Blocks' : 'NC (1-4) Blocks'}</option>
               {availableHostels.map(h => (
@@ -630,15 +629,15 @@ export default function DeliveryDashboard() {
             <select
               value={speedFilter}
               onChange={(e) => setSpeedFilter(e.target.value)}
-              className="w-full sm:w-auto bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-2 text-xs text-slate-300 font-semibold outline-none focus:border-emerald-500"
+              className="w-full sm:w-auto bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-2 text-xs text-slate-300 font-semibold outline-none focus:border-emerald-500 min-h-[38px]"
             >
               <option value="all">All Speeds</option>
-              <option value="express">⚡ 30m Express Only</option>
-              <option value="regular">Regular Delivery</option>
+              <option value="express">⚡ 30m Express</option>
+              <option value="regular">Regular</option>
             </select>
 
             {/* Cards vs Table View Toggle */}
-            <div className="col-span-2 sm:col-span-1 flex items-center justify-center bg-slate-950 p-0.5 rounded-xl border border-slate-800">
+            <div className="col-span-2 sm:col-span-1 flex items-center justify-center bg-slate-950 p-0.5 rounded-xl border border-slate-800 min-h-[38px]">
               <button
                 type="button"
                 onClick={() => setViewMode('cards')}
@@ -696,7 +695,7 @@ export default function DeliveryDashboard() {
         ) : viewMode === 'cards' ? (
           
           /* CARDS VIEW */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5">
             {filteredOrders.map(order => {
               const isDelivered = order.status === 'delivered';
               const isExpress = order.isSuperExpress || 
@@ -713,7 +712,7 @@ export default function DeliveryDashboard() {
               return (
                 <div
                   key={order.id}
-                  className={`bg-slate-900/90 border rounded-3xl p-4 sm:p-5 shadow-xl flex flex-col justify-between transition-all relative overflow-hidden ${
+                  className={`bg-slate-900/90 border rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-xl flex flex-col justify-between transition-all relative overflow-hidden ${
                     isDelivered
                       ? 'border-emerald-500/30 hover:border-emerald-500/60'
                       : 'border-amber-500/40 hover:border-amber-500/70 shadow-amber-500/5'
@@ -761,28 +760,29 @@ export default function DeliveryDashboard() {
                     </div>
 
                     {/* LOCATION CARD (Room Door Number in Bold Emerald!) */}
-                    <div className="my-3 p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-center justify-between gap-2.5">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
+                    <div className="my-2.5 sm:my-3 p-3 sm:p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
                           <MapPin className="w-5 h-5" />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-bold text-slate-300 truncate">
+                          <p className="text-[11px] sm:text-xs font-bold text-slate-400 truncate">
                             {order.customer?.hostel || 'Hostel Block'}
                           </p>
-                          <p className="text-base font-black text-emerald-400 truncate tracking-tight">
+                          <p className="text-base sm:text-lg font-black text-emerald-400 truncate tracking-tight">
                             Room {order.customer?.room || 'Desk Drop'}
                           </p>
                         </div>
                       </div>
 
-                      {/* Direct Phone Call & WhatsApp Buttons */}
+                      {/* Direct Phone Call & WhatsApp Buttons - Touch Friendly */}
                       <div className="flex items-center gap-1.5 shrink-0">
                         {cleanDigits.length >= 10 && (
                           <a
                             href={`tel:${cleanDigits}`}
-                            className="flex items-center justify-center w-9 h-9 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 text-blue-400 border border-blue-500/30 transition-colors"
+                            className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 active:bg-blue-500/35 text-blue-400 border border-blue-500/30 transition-colors"
                             title="Call Student"
+                            aria-label="Call student"
                           >
                             <Phone className="w-4 h-4" />
                           </a>
@@ -792,11 +792,12 @@ export default function DeliveryDashboard() {
                             href={waLink}
                             target="_blank"
                             rel="noreferrer"
-                            className="flex items-center gap-1 px-2.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-xs font-bold transition-colors"
+                            className="flex items-center gap-1 px-2.5 h-10 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 active:bg-emerald-500/35 text-emerald-400 border border-emerald-500/30 text-xs font-bold transition-colors"
                             title="WhatsApp Student"
+                            aria-label="WhatsApp student"
                           >
                             <MessageSquare className="w-4 h-4" />
-                            <span className="hidden xs:inline">WhatsApp</span>
+                            <span>WhatsApp</span>
                           </a>
                         )}
                       </div>
@@ -1065,14 +1066,14 @@ export default function DeliveryDashboard() {
 
       {/* CONFIRMATION MODAL */}
       {deliveryConfirmOrder && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-sm w-full p-6 space-y-5 shadow-2xl relative">
-            <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto">
-              <Truck className="w-7 h-7" />
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl max-w-sm w-full p-4 sm:p-6 space-y-3.5 sm:space-y-5 shadow-2xl relative max-h-[92vh] overflow-y-auto touch-scroll">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto shrink-0">
+              <Truck className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
 
-            <div className="text-center space-y-1.5">
-              <h3 className="text-lg font-black text-white">
+            <div className="text-center space-y-1">
+              <h3 className="text-base sm:text-lg font-black text-white">
                 Confirm Room Drop?
               </h3>
               <p className="text-xs text-slate-400">
@@ -1080,7 +1081,7 @@ export default function DeliveryDashboard() {
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-xs space-y-2">
+            <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-950 border border-slate-800 text-xs space-y-2">
               <div className="flex justify-between">
                 <span className="text-slate-400">Order ID:</span>
                 <span className="font-mono font-bold text-white">{deliveryConfirmOrder.id}</span>
@@ -1093,7 +1094,7 @@ export default function DeliveryDashboard() {
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Student:</span>
-                <span className="font-bold text-white">{deliveryConfirmOrder.customer?.name}</span>
+                <span className="font-bold text-white truncate max-w-[180px]">{deliveryConfirmOrder.customer?.name}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Bill Total:</span>
@@ -1104,7 +1105,7 @@ export default function DeliveryDashboard() {
             </div>
 
             <p className="text-[11px] text-emerald-400/90 text-center font-medium flex items-center justify-center gap-1.5 pt-0.5">
-              <MessageSquare className="w-3.5 h-3.5" />
+              <MessageSquare className="w-3.5 h-3.5 shrink-0" />
               <span>Redirects to WhatsApp with Thanks Note upon confirming</span>
             </p>
 
@@ -1112,14 +1113,14 @@ export default function DeliveryDashboard() {
               <button
                 type="button"
                 onClick={() => setDeliveryConfirmOrder(null)}
-                className="flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-colors cursor-pointer"
+                className="flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-colors cursor-pointer min-h-[42px]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmDelivered}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/25 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 active:scale-[0.98] text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/25 transition-all cursor-pointer flex items-center justify-center gap-1.5 min-h-[42px]"
               >
                 <span>Confirm & WhatsApp</span>
               </button>

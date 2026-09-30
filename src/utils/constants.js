@@ -7,18 +7,14 @@ export const DELIVERY_AREAS = {
   zakir: {
     id: "zakir",
     name: "Zakir Blocks",
-    description: "Zakir Blocks (A, B, C, D) • Order IDs: CU-A-xxx, CU-B-xxx...",
-    orderIdPrefixes: ["CU-A-", "CU-B-", "CU-C-", "CU-D-", "CU-ZAKIR-"],
-    hostels: ["Zakir A", "Zakir B", "Zakir C", "Zakir D"],
-    defaultRunner: "Himanshu (Zakir Runner)"
+    description: "Zakir Blocks (A, B, C, D)",
+    hostels: ["Zakir A", "Zakir B", "Zakir C", "Zakir D"]
   },
   nc_1_4: {
     id: "nc_1_4",
     name: "NC 1 to 4 Blocks",
-    description: "NC Blocks (1, 2, 3, 4) • Order IDs: CU-1-xxx, CU-2-xxx...",
-    orderIdPrefixes: ["CU-1-", "CU-2-", "CU-3-", "CU-4-", "CU-NC1-", "CU-NC2-", "CU-NC3-", "CU-NC4-"],
-    hostels: ["NC 1", "NC 2", "NC 3", "NC 4"],
-    defaultRunner: "Vinay (NC Runner)"
+    description: "NC Blocks (1, 2, 3, 4)",
+    hostels: ["NC 1", "NC 2", "NC 3", "NC 4"]
   }
 };
 
@@ -56,18 +52,4 @@ export function isNC1to4Order(order) {
     return num >= 1 && num <= 4;
   }
   return false;
-}
-
-/**
- * Filters orders by delivery executive zone
- */
-export function filterOrdersByDeliveryArea(orders = [], area = 'zakir') {
-  if (!Array.isArray(orders)) return [];
-  if (area === 'zakir') {
-    return orders.filter(isZakirOrder);
-  }
-  if (area === 'nc_1_4' || area === 'nc') {
-    return orders.filter(isNC1to4Order);
-  }
-  return [];
 }
